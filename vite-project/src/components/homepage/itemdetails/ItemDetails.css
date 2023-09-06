@@ -1,0 +1,8 @@
+.img {
+    width: 25rem;
+}
+.item-details-card {
+    border: 1px red dotted;
+    width: 100%;
+    margin-left: 5rem;
+}
