@@ -1,4 +1,5 @@
 import './App.css'
+import { useState } from 'react'
 import Home from './components/homepage/Home'
 import Search from './components/homepage/searchbar/Search'
 import Login from './components/loginpage/Login'
@@ -11,15 +12,15 @@ import Rating from './components/homepage/filter/rating/Rating'
 import { Routes, Route, Link } from 'react-router-dom'
 
 function App() {
-
+    const [userId,setUserId] = useState("")
   return (
     <div>
         <Link to=''></Link>
         <div className='Routes'>
           <Routes>
             <Route path='/Home' element={<Home />}/>
-            <Route path='' element={<Login />}/>
-            <Route path='/Cart' element={<Cart />}/>
+            <Route path='' element={<Login userId={userId} setUserId={setUserId} />}/>
+            <Route path='/Cart' element={<Cart userId={userId} setUserId={setUserId} />}/>
             <Route path='/Checkout' element={<Checkout />}/>
             <Route path='/Itemdetails/:id' element={<ItemDetails />}/>
             <Route path='/Home/Category' element={<Category />}/>
