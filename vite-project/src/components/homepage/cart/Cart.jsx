@@ -1,74 +1,65 @@
-import './Cart.css'
-import NavBar from '../navbar/NavBar'
-import Checkout from '../../checkoutpage/Checkout'
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useCart } from '../../CartContext'; // Import your CartContext
+import NavBar from '../navbar/NavBar';
 
-function Cart(props) {
-  const userId = props.userId;
-  const [cartItems, setCartItems] = useState([])
-  const [items, setItems] = useState([])
-//fetches the users cart
+function Cart() {
+  const { cartItemIds, removeFromCart } = useCart();
+  const [items, setItems] = useState([]);
+//use to store cartdata into local storage
   useEffect(() => {
-    async function renderUserCart() {
-        try {
-            const response = await fetch(`https://fakestoreapi.com/carts/user/${userId}`)
-            const result = await response.json()
-            const items = result[0]
-            setCartItems(items.products);
-        } catch (err) {
-            console.error(err)
-        }
+    const storedCartData = localStorage.getItem('cartItemIds');
+    if (storedCartData) {
+      const parsedCartData = JSON.parse(storedCartData);
+      setItems(parsedCartData);
     }
-    renderUserCart();
-}, [userId])
-
-//fetches all the items then sorts through them and updates the array so that the items that are in 
-//the cart will be desplayed on the screen
+  }, []);
+//fetches all items and converts the ids to strings and compares the ids with the ids from cartItemIds and 
+//updates the items state to include the matching ids
   useEffect(() => {
     async function renderAllItems() {
-        try {
-            const response = await fetch(`https://fakestoreapi.com/products`)
-            const result = await response.json()
-
-            const cartItemIds = cartItems.map(item => item.productId)
-
-            const filteredItems = result.filter(item => cartItemIds.includes(item.id))
-            setItems(filteredItems)
-        } catch (err) {
-            console.error(err)
-        }
+      try {
+        const response = await fetch(`https://fakestoreapi.com/products`);
+        const result = await response.json();
+        const cartItemIdsStrings = cartItemIds.map(String);
+        const cartItemsData = result.filter((item) =>
+          cartItemIdsStrings.includes(item.id.toString())
+        );
+        setItems(cartItemsData);
+      } catch (err) {
+        console.error(err);
+      }
     }
     renderAllItems();
-  }, [cartItems])
-  function CheckoutBtn () {
-    const path = `/Checkout`
-    navigate(path);
-  }
-  
-    return (
-      <div>
-        <NavBar />
-        <button onClick={CheckoutBtn}>Checkout</button>
-        <div className='main'> 
-                <div className='container'>
-                    <div className='row'>
-                        {
-                            items.map((item) => {
-                                return (
-                                    <div key={item.id} className='itemCard'>
-                                        <ul>{item.title}</ul>
-                                        <img src={item.image} alt='picture_of_item' className='item-img'/>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-            </div>
-      </div>
-    )
-  }
-  
-  export default Cart
+  }, [cartItemIds]);
+//calls the handleremovefromCart function from cartContext to handle the delete of the items
+  const handleRemoveFromCart = (itemId) => {
+    removeFromCart(itemId);
+  };
+
+  return (
+    <div>
+      <NavBar />
+      <div className='main'> 
+              <div className='container'>
+                  <div className='row'>
+                      {
+                          items.map((item, index) => {
+                              return (
+                                  <div key={index} className='itemCard'>
+                                    
+                                      <div>{item.title}</div>
+                                      <img src={item.image} alt='picture_of_item' className='item-img'/>
+                                      <button onClick={() => handleRemoveFromCart(item.id)}>Delete</button>
+                                      
+                                  </div>
+                              )
+                          })
+                      }
+                  </div>
+              </div>
+          </div>
+    </div>
+  )
+}
+
+export default Cart;
