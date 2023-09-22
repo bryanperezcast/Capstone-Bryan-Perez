@@ -29,7 +29,7 @@ function ItemDetails(props) {
         <div className='item-details-card'>
           <h1>{item.title}</h1>
           <img src={item.image} alt={item.title} className='img'/>
-          <h3>{item.price}</h3>
+          <h3>${item.price}</h3>
           <h5>{item.description}</h5>
           <AddToCart userId={userId}/>
           <h3>{item.category}</h3>

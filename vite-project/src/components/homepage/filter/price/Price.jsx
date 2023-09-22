@@ -1,5 +1,6 @@
 import './Price.css'
 import NavBar from '../../navbar/NavBar'
+import Search from '../../searchbar/Search';
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; 
 import { useState } from 'react';
@@ -49,6 +50,7 @@ function Price() {
   return (
     <div>
       <NavBar />
+      <div className='search-bar'><Search items={items} setItems={setItems} /></div>
       <div className='main'> 
           <div className='container'>
               <div className='row'>
@@ -59,7 +61,7 @@ function Price() {
                                   <ul>{item.title}</ul>
                                   <img src={item.image} alt='picture_of_item' className='item-img'/>
                                   <button 
-                                  onClick={() => routeChange(item)}>Details</button>
+                                  onClick={() => routeChange(item)}className='details-Btn'>Details</button>
                               </div>
                           )
                       })

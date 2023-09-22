@@ -31,16 +31,16 @@ function NavBar() {
                 <div className='Links Filter'>
                     <BsFilterLeft className='Link-text'/>
                     {/*Price buttons */}
-                    <button className='filter-item' onClick={(event) => { routeChangeId("1") }}>Price:Low to High</button>
-                    <button className='filter-item' onClick={() => routeChangeId("2")}>Price:High to Low</button>
+                    <button className='filter-item filter-Btn' onClick={(event) => { routeChangeId("1") }}>Price:Low to High</button>
+                    <button className='filter-item filter-Btn' onClick={() => routeChangeId("2")}>Price:High to Low</button>
                     {/*Rating buttons */}
-                    <button className='filter-item' onClick={() => routeChangeId("3")}>Rating:Least to Greatest</button>
-                    <button className='filter-item' onClick={() => routeChangeId("4")}>Rating:Greatest to Least</button>
+                    <button className='filter-item filter-Btn' onClick={() => routeChangeId("3")}>Rating:Least to Greatest</button>
+                    <button className='filter-item filter-Btn' onClick={() => routeChangeId("4")}>Rating:Greatest to Least</button>
                     {/*Category buttons */}
-                    <button className='filter-item' onClick={() => routeChangeId("5")}>Men's Clothing</button>
-                    <button className='filter-item' onClick={() => routeChangeId("6")}>women's Clothing</button>
-                    <button className='filter-item' onClick={() => routeChangeId("7")}>Jewelery</button>
-                    <button className='filter-item' onClick={() => routeChangeId("8")}>Electronics</button>
+                    <button className='filter-item filter-Btn' onClick={() => routeChangeId("5")}>Men's Clothing</button>
+                    <button className='filter-item filter-Btn' onClick={() => routeChangeId("6")}>women's Clothing</button>
+                    <button className='filter-item filter-Btn' onClick={() => routeChangeId("7")}>Jewelery</button>
+                    <button className='filter-item filter-Btn' onClick={() => routeChangeId("8")}>Electronics</button>
                 </div>
                 <div className='Links'>
                     <Link to={`/Cart`} className='Link-text'><AiOutlineShoppingCart /></Link>

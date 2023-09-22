@@ -1,8 +1,52 @@
-.img {
-    width: 25rem;
-}
+/* ItemDetails.css */
+
+/* Container for the entire item details component */
 .item-details-card {
-    border: 1px red dotted;
-    width: 100%;
-    margin-left: 5rem;
-}
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  /* Item title */
+  .item-details-card h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Item image */
+  .item-details-card .img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Item price */
+  .item-details-card h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff; /* Blue color for price */
+    margin-bottom: 10px;
+  }
+  
+  /* Item description */
+  .item-details-card h5 {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  /* Item category */
+  .item-details-card h3:last-child {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  /* AddToCart component styling (if needed) */
+  /* You can add specific styles for the AddToCart component if necessary */
+  

@@ -1,6 +1,8 @@
+import './Cart.css'
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../../CartContext'; // Import your CartContext
 import NavBar from '../navbar/NavBar';
+import CartPrice from './CartPrice'
 
 function Cart() {
   const { cartItemIds, removeFromCart } = useCart();
@@ -21,10 +23,11 @@ function Cart() {
         const response = await fetch(`https://fakestoreapi.com/products`);
         const result = await response.json();
         const cartItemIdsStrings = cartItemIds.map(String);
-        const cartItemsData = result.filter((item) =>
-          cartItemIdsStrings.includes(item.id.toString())
+        const cartItemsData = cartItemIdsStrings.flatMap((cartItemId) =>
+          result.filter((item) => item.id.toString() === cartItemId)
         );
         setItems(cartItemsData);
+        localStorage.setItem('cartItemIds', JSON.stringify(cartItemIds))
       } catch (err) {
         console.error(err);
       }
@@ -35,22 +38,40 @@ function Cart() {
   const handleRemoveFromCart = (itemId) => {
     removeFromCart(itemId);
   };
+//counts the amount of the same items in the cart
+  const countItemOccurrences = (itemId) => {
+    return cartItemIds.filter((id) => id === itemId).length;
+  };
+
+  //const itemQuantity = countItemOccurrences(item.id);
+
+  function itemQuantity (num, itemId) {
+    if (num === "add") {
+      console.log("+1")
+    } else if (num === "subtract") {
+      console.log(itemId)
+    }
+  }
 
   return (
     <div>
       <NavBar />
       <div className='main'> 
               <div className='container'>
-                  <div className='row'>
+                  <div className='cart-items'>
                       {
                           items.map((item, index) => {
                               return (
-                                  <div key={index} className='itemCard'>
-                                    
-                                      <div>{item.title}</div>
+                                  <div key={index} className='cart-item'>
+                                    <div className='item-details'>
+                                      <div className='item-name'>{item.title}</div>
                                       <img src={item.image} alt='picture_of_item' className='item-img'/>
-                                      <button onClick={() => handleRemoveFromCart(item.id)}>Delete</button>
-                                      
+                                      <div>${item.price}</div>
+                                      <div className='item-quantity'>Quantity: </div>
+                                      <button onClick={() => itemQuantity("add", item.id)}>+</button>
+                                      <button onClick={() => itemQuantity("subtract", item.id)}>-</button>
+                                      <button onClick={() => handleRemoveFromCart(item.id)} className='btnDel'>Delete</button>
+                                    </div>
                                   </div>
                               )
                           })
@@ -58,6 +79,7 @@ function Cart() {
                   </div>
               </div>
           </div>
+          <CartPrice items={items}/>
     </div>
   )
 }

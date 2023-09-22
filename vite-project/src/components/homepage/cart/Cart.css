@@ -1,0 +1,44 @@
+/* Center the cart items and create a single column layout */
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Style each cart item */
+  .cart-item {
+    width: 15%;
+    height: 350px;
+    margin: 10px 0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  /* Style the item details */
+  .item-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Style the item name */
+  .item-name {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Style the item image */
+  .item-img {
+    width: 100px; /* Set a fixed width for the image */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 10px;
+  }
+  
+  /* Style the item quantity */
+  .item-quantity {
+    margin-bottom: 10px;
+  }

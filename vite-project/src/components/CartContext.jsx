@@ -23,7 +23,7 @@ export function CartProvider({ children }) {
 
   const addToCart = (itemId) => {
     setCartItemIds([...cartItemIds, itemId]);
-  };
+  }
 
     const removeFromCart = (itemId) => {
     const itemIdString = itemId.toString();

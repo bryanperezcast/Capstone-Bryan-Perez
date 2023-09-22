@@ -4,18 +4,18 @@ import { useCart } from '../../../CartContext';
 
 function AddToCart() {
   const { id } = useParams();
-  const { addToCart, cartItemIds, setCartItemIds } = useCart();
+  const { addToCart, cartItemIds } = useCart();
 
   const handleAddToCart = () => {
     addToCart(id);
-
-    const updatedCart = [...cartItemIds, id];
-    localStorage.setItem('cartItemIds', JSON.stringify(updatedCart));
   };
+
+  const itemQuantity = cartItemIds.filter((itemId) => itemId === id).length;
 
   return (
     <div>
       <button onClick={handleAddToCart}>Add Item to Cart</button>
+      <p>Quantity: {itemQuantity}</p>
     </div>
   );
 }

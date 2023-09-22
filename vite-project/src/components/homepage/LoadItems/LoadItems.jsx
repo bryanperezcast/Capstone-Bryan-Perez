@@ -39,7 +39,7 @@ function LoadItems() {
                                         <ul>{item.title}</ul>
                                         <img src={item.image} alt='picture_of_item' className='item-img'/>
                                         <button 
-                                        onClick={() => routeChange(item)}>Details</button>
+                                        onClick={() => routeChange(item)} className='details-Btn'>Details</button>
                                     </div>
                                 )
                             })
