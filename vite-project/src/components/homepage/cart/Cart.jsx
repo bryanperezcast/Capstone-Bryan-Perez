@@ -5,8 +5,10 @@ import NavBar from '../navbar/NavBar';
 import CartPrice from './CartPrice'
 
 function Cart() {
-  const { cartItemIds, removeFromCart } = useCart();
+  const { cartItemIds, setCartItemIds, removeFromCart } = useCart();
   const [items, setItems] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+  //console.log(cartItemIds)
 //use to store cartdata into local storage
   useEffect(() => {
     const storedCartData = localStorage.getItem('cartItemIds');
@@ -17,23 +19,22 @@ function Cart() {
   }, []);
 //fetches all items and converts the ids to strings and compares the ids with the ids from cartItemIds and 
 //updates the items state to include the matching ids
-  useEffect(() => {
-    async function renderAllItems() {
-      try {
-        const response = await fetch(`https://fakestoreapi.com/products`);
-        const result = await response.json();
-        const cartItemIdsStrings = cartItemIds.map(String);
-        const cartItemsData = cartItemIdsStrings.flatMap((cartItemId) =>
-          result.filter((item) => item.id.toString() === cartItemId)
-        );
-        setItems(cartItemsData);
-        localStorage.setItem('cartItemIds', JSON.stringify(cartItemIds))
-      } catch (err) {
-        console.error(err);
-      }
+useEffect(() => {
+  async function renderAllItems() {
+    try {
+      const response = await fetch(`https://fakestoreapi.com/products`);
+      const result = await response.json();
+      const cartItemIdsObjects = cartItemIds.flatMap((cartItem) =>
+        result.filter((item) => item.id.toString() === cartItem.id)
+      );
+      setItems(cartItemIdsObjects);
+      localStorage.setItem('cartItemIds', JSON.stringify(cartItemIds));
+    } catch (err) {
+      console.error(err);
     }
-    renderAllItems();
-  }, [cartItemIds]);
+  }
+  renderAllItems();
+}, [cartItemIds]);
 //calls the handleremovefromCart function from cartContext to handle the delete of the items
   const handleRemoveFromCart = (itemId) => {
     removeFromCart(itemId);
@@ -44,15 +45,33 @@ function Cart() {
   };
 
   //const itemQuantity = countItemOccurrences(item.id);
+  const itemQuantity = (action, itemId) => {
+    // Find the index of the item in the cart
+    const itemIndex = items.findIndex((item) => item.id === itemId);
 
-  function itemQuantity (num, itemId) {
-    if (num === "add") {
-      console.log("+1")
-    } else if (num === "subtract") {
-      console.log(itemId)
+    if (itemIndex !== -1) {
+      const updatedCart = [...cartItemIds];
+
+      if (action === 'add') {
+        // Increment the quantity
+        updatedCart[itemIndex].quantity += 1;
+        setQuantity(quantity + 1); // Update the state
+      } else if (action === 'subtract') {
+        // Decrement the quantity (only if greater than 0)
+        if (updatedCart[itemIndex].quantity > 1) {
+          updatedCart[itemIndex].quantity -= 1;
+          setQuantity(quantity - 1); // Update the state
+        } else {
+          // Remove the item from the cart if quantity is 1 or less
+          updatedCart.splice(itemIndex, 1);
+          setQuantity(0); // Reset quantity if item is removed
+        }
+      }
+
+      // Update the items state
+      setCartItemIds(updatedCart)
     }
-  }
-
+  };
   return (
     <div>
       <NavBar />
@@ -61,13 +80,14 @@ function Cart() {
                   <div className='cart-items'>
                       {
                           items.map((item, index) => {
+                            const cartItem = cartItemIds.find((cartItem) => cartItem.id === item.id.toString());
                               return (
                                   <div key={index} className='cart-item'>
                                     <div className='item-details'>
                                       <div className='item-name'>{item.title}</div>
                                       <img src={item.image} alt='picture_of_item' className='item-img'/>
                                       <div>${item.price}</div>
-                                      <div className='item-quantity'>Quantity: </div>
+                                      <div className='item-quantity'>Quantity: {cartItem ? cartItem.quantity : 0}</div>
                                       <button onClick={() => itemQuantity("add", item.id)}>+</button>
                                       <button onClick={() => itemQuantity("subtract", item.id)}>-</button>
                                       <button onClick={() => handleRemoveFromCart(item.id)} className='btnDel'>Delete</button>
@@ -79,7 +99,7 @@ function Cart() {
                   </div>
               </div>
           </div>
-          <CartPrice items={items}/>
+          <CartPrice items={items} cartItemIds={cartItemIds}/>
     </div>
   )
 }

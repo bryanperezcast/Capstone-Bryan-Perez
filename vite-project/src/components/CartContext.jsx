@@ -22,14 +22,36 @@ export function CartProvider({ children }) {
   }, []);
 
   const addToCart = (itemId) => {
-    setCartItemIds([...cartItemIds, itemId]);
+    const itemIndex = cartItemIds.findIndex((item) => item.id === itemId);
+
+  if (itemIndex !== -1) {
+    // If it's in the cart, increment the quantity
+    const updatedCart = [...cartItemIds];
+    updatedCart[itemIndex].quantity++;
+    setCartItemIds(updatedCart);
+  } else {
+    // If it's not in the cart, add it with a quantity of 1
+    setCartItemIds([...cartItemIds, { id: itemId, quantity: 1 }]);
+  }
   }
 
-    const removeFromCart = (itemId) => {
+  const removeFromCart = (itemId) => {
+    // Create a copy of cartItemIds
+    const updatedCart = [...cartItemIds];
     const itemIdString = itemId.toString();
-    const updatedCart = cartItemIds.filter((id) => id !== itemIdString);
-    setCartItemIds(updatedCart);
-    localStorage.setItem('cartItemIds', JSON.stringify(updatedCart));
+  
+    // Find the index of the item in the cart
+    const itemIndex = updatedCart.findIndex((item) => item.id === itemIdString);
+  
+    if (itemIndex !== -1) {
+      // Remove the item from the cart
+      updatedCart.splice(itemIndex, 1);
+  
+      // Update cartItemIds state and localStorage
+      setCartItemIds(updatedCart);
+      localStorage.setItem('cartItemIds', JSON.stringify(updatedCart));
+      console.log(cartItemIds)
+    }
   };
 
   // Provide setCartItemIds as part of the context
