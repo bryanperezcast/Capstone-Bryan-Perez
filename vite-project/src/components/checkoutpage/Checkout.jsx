@@ -6,7 +6,7 @@ function Checkout() {
     return (
       <div>
         <NavBar />
-        <h1>hello</h1>
+        <h1>Checkout Successfull</h1>
       </div>
     )
   }

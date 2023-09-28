@@ -46,11 +46,11 @@ function Price() {
     const path = `/Itemdetails/${item.id}`
     navigate(path);
 }
-  
+  //<Search items={items} setItems={setItems} />
   return (
     <div>
       <NavBar />
-      <div className='search-bar'><Search items={items} setItems={setItems} /></div>
+      <div className='search-bar'></div>
       <div className='main'> 
           <div className='container'>
               <div className='row'>

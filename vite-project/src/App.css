@@ -98,3 +98,36 @@
 .filter-Btn:hover::before {
     height: 180%;
 }
+/*checkout btn*/
+.Checkoutbtn {
+    border: 1px solid var(--bg-primary);
+    border-radius: 2rem;
+    background: none;
+    padding: 0px 0px;
+    font-size: 35px;
+    font-family: "montserrat";
+    cursor: pointer;
+    margin: 0px;
+    color: var(--bg-primary);
+    transition: 0.8s;
+    position: relative;
+    overflow: hidden;
+}
+.Checkoutbtn:hover {
+    color: #fff;
+}
+.Checkoutbtn::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background: var(--bg-primary);
+    z-index: -1;
+    transition: 0.8s;
+    top: 0;
+    border-radius: 0 0 50% 50%;
+}
+.Checkoutbtn:hover::before {
+    height: 180%;
+}

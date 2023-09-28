@@ -25,10 +25,10 @@ function LoadItems() {
         const path = `/Itemdetails/${item.id}`
         navigate(path);
     }
-  
+  //<Search items={items} setItems={setItems}/>
     return (
         <div>
-            <div className='search-bar'><Search items={items} setItems={setItems}/></div>
+            <div className='search-bar'></div>
             <div className='main'> 
                 <div className='container'>
                     <div className='row'>

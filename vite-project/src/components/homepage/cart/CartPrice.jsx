@@ -19,7 +19,8 @@ function CartPrice(props) {
 
     return (
       <div>
-        <h1>${totalPricestring}</h1>
+        <button className='price'>hi</button>
+        <h1 className='price'>${totalPricestring}</h1>
       </div>
     )
   }

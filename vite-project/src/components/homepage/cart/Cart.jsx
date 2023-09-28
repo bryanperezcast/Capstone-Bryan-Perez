@@ -3,11 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { useCart } from '../../CartContext'; // Import your CartContext
 import NavBar from '../navbar/NavBar';
 import CartPrice from './CartPrice'
+import { useNavigate } from 'react-router-dom';
 
 function Cart() {
   const { cartItemIds, setCartItemIds, removeFromCart } = useCart();
   const [items, setItems] = useState([]);
   const [quantity, setQuantity] = useState(0);
+  const navigate = useNavigate();
   //console.log(cartItemIds)
 //use to store cartdata into local storage
   useEffect(() => {
@@ -72,6 +74,14 @@ useEffect(() => {
       setCartItemIds(updatedCart)
     }
   };
+
+  function routeChange() {
+    console.log(cartItemIds)
+    setCartItemIds([])
+    const path = '/Checkout'
+    navigate(path)
+  }
+
   return (
     <div>
       <NavBar />
@@ -98,6 +108,7 @@ useEffect(() => {
                       }
                   </div>
               </div>
+              <button className='Checkoutbtn' onClick={routeChange}>Checkout</button>
           </div>
           <CartPrice items={items} cartItemIds={cartItemIds}/>
     </div>

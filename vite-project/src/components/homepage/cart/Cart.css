@@ -8,7 +8,7 @@
   /* Style each cart item */
   .cart-item {
     width: 15%;
-    height: 350px;
+    height: 400px;
     margin: 10px 0;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
     overflow: hidden;
@@ -42,3 +42,9 @@
   .item-quantity {
     margin-bottom: 10px;
   }
+.Checkoutbtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

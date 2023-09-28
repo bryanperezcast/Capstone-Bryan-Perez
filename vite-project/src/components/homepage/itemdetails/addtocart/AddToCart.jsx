@@ -1,13 +1,16 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useCart } from '../../../CartContext';
+import { useState } from 'react';
 
 function AddToCart() {
   const { id } = useParams();
   const { addToCart, cartItemIds } = useCart();
+  const [ showMessage, setShowMessage ] = useState(false)
 
   const handleAddToCart = () => {
     addToCart(id);
+    setShowMessage(true)
   };
 
   const itemQuantity = cartItemIds.filter((itemId) => itemId === id).length;
@@ -15,7 +18,7 @@ function AddToCart() {
   return (
     <div>
       <button onClick={handleAddToCart}>Add Item to Cart</button>
-      <p>Quantity: {itemQuantity}</p>
+      {showMessage && <h1>Item Added To Cart</h1>}
     </div>
   );
 }
